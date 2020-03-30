@@ -7,6 +7,7 @@ import * as MailComposer from 'expo-mail-composer';
 import logoImg from '../../assets/logo.png';
 
 import styles from './styles';
+import { FlatList } from 'react-native-gesture-handler';
 
 export default function Detail() {
     const navigation = useNavigation();
@@ -39,34 +40,42 @@ export default function Detail() {
                     <Feather name="arrow-left" size={28} color="#E02041"/>
                 </TouchableOpacity>
             </View>
+            <FlatList 
+                style={styles.incidentList}
+                data={[1]}
+                keyExtractor={incident => String(incident.id)}
+                showsVerticalScrollIndicator={false}
+                renderItem={() => (
+                    <View>
+                        <View style={styles.incident}>
+                            <Text style={[styles.incidentProperty, {marginTop: 0} ]}>ONG:</Text>
+                            <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
 
-            <View style={styles.incident}>
-                <Text style={[styles.incidentProperty, {marginTop: 0} ]}>ONG:</Text>
-                <Text style={styles.incidentValue}>{incident.name} de {incident.city}/{incident.uf}</Text>
+                            <Text style={styles.incidentProperty}>CASO:</Text>
+                            <Text style={styles.incidentValue}>{incident.title}</Text>
 
-                <Text style={styles.incidentProperty}>CASO:</Text>
-                <Text style={styles.incidentValue}>{incident.title}</Text>
+                            <Text style={styles.incidentProperty}>VALOR:</Text>
+                            <Text style={styles.incidentValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}</Text>
+                        </View>
+                        <View style={styles.contactBox}>
+                            <Text style={styles.heroTitle}>Salve o dia!</Text>
+                            <Text style={styles.heroTitle}>Seja o herói desse caso.</Text>
 
-                <Text style={styles.incidentProperty}>VALOR:</Text>
-                <Text style={styles.incidentValue}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL'}).format(incident.value)}</Text>
-            </View>
+                            <Text style={styles.heroDescription}>Entre em contato</Text>
 
-            <View style={styles.contactBox}>
-                <Text style={styles.heroTitle}>Salve o dia!</Text>
-                <Text style={styles.heroTitle}>Seja o herói desse caso.</Text>
+                            <View style={styles.actions}>
+                                <TouchableOpacity style={styles.action} onPress={sendWhatsapp}>
+                                    <Text style={styles.actionText}>WhatsApp</Text>
+                                </TouchableOpacity>
 
-                <Text style={styles.heroDescription}>Entre em contato</Text>
-
-                <View style={styles.actions}>
-                    <TouchableOpacity style={styles.action} onPress={sendWhatsapp}>
-                        <Text style={styles.actionText}>WhatsApp</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.action} onPress={sendEmail}>
-                        <Text style={styles.actionText}>E-mail</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                                <TouchableOpacity style={styles.action} onPress={sendEmail}>
+                                    <Text style={styles.actionText}>E-mail</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                )}
+            />
         </View>
     )
 }

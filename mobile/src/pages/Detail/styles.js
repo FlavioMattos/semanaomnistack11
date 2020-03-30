@@ -18,8 +18,12 @@ export default StyleSheet.create({
         padding: 24,
         borderRadius: 8,
         backgroundColor: '#FFF',
-        marginTop: 32,
+        marginTop: 0,
         marginBottom: 16,
+    },
+
+    incidentList: {
+        marginTop: 32,
     },
 
     incidentProperty: {
